@@ -194,7 +194,7 @@ module Excon
           # finish first line with "HTTP/1.1\r\n"
           request << HTTP_1_1
 
-          if params.has_key?(:request_block)
+          if params.has_key?(:request_block) || (params[:body] && !params[:body].is_a?(String))
             params[:headers]['Transfer-Encoding'] = 'chunked'
           elsif ! (params[:method].to_s.casecmp('GET') == 0 && params[:body].nil?)
             # The HTTP spec isn't clear on it, but specifically, GET requests don't usually send bodies;
